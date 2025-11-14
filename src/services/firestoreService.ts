@@ -196,6 +196,7 @@ export const initializeUserData = async (userId: string): Promise<void> => {
       soundEnabled: true,
       vibrationEnabled: true,
       hasCompletedOnboarding: false,
+      darkMode: false,
     };
     batch.set(settingsRef, initialSettings);
 
