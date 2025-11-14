@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { FaGoogle, FaUserSecret } from 'react-icons/fa';
 import { useAuth } from '../contexts/AuthContext';
 import { Button } from '../components/Button';
+import { InstallPWA } from '../components/InstallPWA';
 import { useNavigate } from 'react-router-dom';
 
 export const Login: React.FC = () => {
@@ -115,6 +116,11 @@ export const Login: React.FC = () => {
             <div className="text-2xl font-bold text-primary-600 mb-1">∞</div>
             <div className="text-xs text-slate-600">Your Potential</div>
           </div>
+        </div>
+
+        {/* Install PWA Button */}
+        <div className="mt-6">
+          <InstallPWA fullWidth variant="outline" size="md" />
         </div>
       </div>
     </div>

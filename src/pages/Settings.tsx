@@ -11,6 +11,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { useUser } from '../contexts/UserContext';
 import { Card } from '../components/Card';
 import { Button } from '../components/Button';
+import { InstallPWA } from '../components/InstallPWA';
 import { Modal } from '../components/Modal';
 import { Onboarding } from '../components/Onboarding';
 import { useNavigate } from 'react-router-dom';
@@ -359,6 +360,8 @@ export const Settings: React.FC = () => {
           {/* Actions */}
           <Card variant="bordered" className="mb-6">
             <div className="space-y-3">
+              <InstallPWA fullWidth variant="secondary" size="md" />
+
               <Button
                 variant="outline"
                 fullWidth
