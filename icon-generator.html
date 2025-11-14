@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PlankUP Icon Generator</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            padding: 20px;
+            background: #f8fafc;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #0ea5e9;
+            margin-bottom: 20px;
+        }
+        canvas {
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            margin: 10px;
+        }
+        button {
+            background: linear-gradient(135deg, #0ea5e9, #0284c7);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+        button:hover {
+            opacity: 0.9;
+        }
+        .preview {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>PlankUP Icon Generator</h1>
+        <p>Click the buttons below to download the PWA icons:</p>
+
+        <div class="preview">
+            <div>
+                <h3>192x192 Icon</h3>
+                <canvas id="canvas192" width="192" height="192"></canvas>
+                <br>
+                <button onclick="downloadIcon(192)">Download icon-192.png</button>
+            </div>
+
+            <div>
+                <h3>512x512 Icon</h3>
+                <canvas id="canvas512" width="512" height="512"></canvas>
+                <br>
+                <button onclick="downloadIcon(512)">Download icon-512.png</button>
+            </div>
+        </div>
+
+        <div style="margin-top: 30px; padding: 20px; background: #f0f9ff; border-radius: 8px;">
+            <h3 style="margin-top: 0;">Instructions:</h3>
+            <ol>
+                <li>Click "Download icon-192.png" and save it to <code>/public/icon-192.png</code></li>
+                <li>Click "Download icon-512.png" and save it to <code>/public/icon-512.png</code></li>
+                <li>Rebuild your project</li>
+                <li>Your PWA will now be installable!</li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        function drawIcon(canvas, size) {
+            const ctx = canvas.getContext('2d');
+
+            // Background gradient
+            const gradient = ctx.createLinearGradient(0, 0, size, size);
+            gradient.addColorStop(0, '#0ea5e9');
+            gradient.addColorStop(1, '#0284c7');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, size, size);
+
+            const scale = size / 192;
+            const centerX = size / 2;
+            const centerY = size / 2 - 10 * scale;
+
+            // Draw arrow pointing up
+            ctx.fillStyle = 'white';
+            ctx.strokeStyle = 'white';
+            ctx.lineWidth = 8 * scale;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+
+            // Arrow shaft
+            ctx.beginPath();
+            ctx.moveTo(centerX, centerY - 35 * scale);
+            ctx.lineTo(centerX, centerY + 15 * scale);
+            ctx.stroke();
+
+            // Arrow head (triangle)
+            ctx.beginPath();
+            ctx.moveTo(centerX, centerY - 50 * scale);
+            ctx.lineTo(centerX - 25 * scale, centerY - 25 * scale);
+            ctx.lineTo(centerX + 25 * scale, centerY - 25 * scale);
+            ctx.closePath();
+            ctx.fill();
+
+            // Add "PlankUP" text
+            ctx.font = `bold ${32 * scale}px system-ui, -apple-system, sans-serif`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('PlankUP', centerX, centerY + 50 * scale);
+        }
+
+        function downloadIcon(size) {
+            const canvas = document.getElementById(`canvas${size}`);
+            const link = document.createElement('a');
+            link.download = `icon-${size}.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+
+        // Draw icons on load
+        window.onload = function() {
+            drawIcon(document.getElementById('canvas192'), 192);
+            drawIcon(document.getElementById('canvas512'), 512);
+        };
+    </script>
+</body>
+</html>
